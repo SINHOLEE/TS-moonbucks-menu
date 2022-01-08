@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start2": "npm run dev & npm run start",
-    "start": "parcel index.html -w",
+    "start": "parcel index.html",
     "build": "tsc",
     "dev": "tsc -w"
   },
@@ -32,7 +32,9 @@
     "typescript": "4.4.4"
   },
   "dependencies": {
+    "global": "^4.4.0",
     "modules": "^0.4.0",
+    "parcel-bundler": "^1.12.5",
     "shared": "^0.2.0",
     "ui": "^0.2.4"
   }

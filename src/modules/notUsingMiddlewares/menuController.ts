@@ -3,7 +3,7 @@ import { CoffeeKeys, MenuItem } from '../type';
 import { getUUID } from '../../utils/util';
 import { CurrentMenuRepository } from './Repository';
 import { MESSAGES } from '../../constants';
-export interface CurrentMenuService {
+export interface MenuController {
   getList: () => MenuItem[];
   currentTab: () => string;
   changeTab: (selectedTab: CoffeeKeys) => void;
@@ -12,7 +12,7 @@ export interface CurrentMenuService {
   edit: (menuId: string | undefined) => void;
   add: (text: string) => void;
 }
-export const createCurrentMenuService = (() => {
+export const MenuController = (() => {
   console.log('클로져!!');
   return (currentMenuRepo: CurrentMenuRepository) => ({
     getList: currentMenuRepo.getList,

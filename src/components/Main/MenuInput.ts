@@ -3,11 +3,11 @@ import { $ } from '../../utils/util';
 import { EVENTS } from '../../constants';
 
 export default class MenuInput extends Component {
-  get service() {
-    return this?.props?.currentMenuService;
+  get menuController() {
+    return this?.props?.menuController;
   }
   template() {
-    const currentTab = this.service.currentTab();
+    const currentTab = this.menuController.currentTab();
     return `
     <div class="d-flex w-100">
       <label for="espresso-menu-name" class="input-label" hidden>
@@ -37,7 +37,7 @@ export default class MenuInput extends Component {
     const $input = $('#espresso-menu-name') as HTMLInputElement;
     e.preventDefault();
     if ($input.value) {
-      this.service.add($input.value);
+      this.menuController.add($input.value);
 
       $input.value = '';
     }

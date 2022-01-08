@@ -1,6 +1,6 @@
 import Component from '../../core/Component';
 import MenuTitle from './MenuTitle';
-import { createCurrentMenuService } from '../../modules/notUsingMiddlewares/services';
+import { MenuController } from '../../modules/notUsingMiddlewares/menuController';
 import { createCurrentMenuRepository } from '../../modules/notUsingMiddlewares/Repository';
 import MenuInput from './MenuInput';
 import MenuList from './MenuList/MenuList';
@@ -23,25 +23,30 @@ export default class Main extends Component {
   }
   mount() {
     const currentMenuRepo = createCurrentMenuRepository(this.store, {});
-    const currentMenuService = createCurrentMenuService(currentMenuRepo);
-    new MenuTitle({
-      key: 'menu-title',
-      props: {
-        currentMenuService,
-      },
-    });
-    new MenuInput({
-      key: 'menu-input',
-      props: {
-        currentMenuService,
-      },
-    });
-    new MenuList({
-      key: 'menu-list',
-      props: {
-        currentMenuService,
-        currentMenuRepo,
-      },
-    });
+    const menuController = MenuController(currentMenuRepo);
+    this.addChildComponent(
+      new MenuTitle({
+        key: 'menu-title',
+        props: {
+          menuController,
+        },
+      }),
+    );
+    this.addChildComponent(
+      new MenuInput({
+        key: 'menu-input',
+        props: {
+          menuController,
+        },
+      }),
+    );
+    this.addChildComponent(
+      new MenuList({
+        key: 'menu-list',
+        props: {
+          menuController,
+        },
+      }),
+    );
   }
 }

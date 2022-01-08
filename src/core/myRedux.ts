@@ -30,12 +30,13 @@ export function createStore<TState, TActions>(
     dispatch: action => {
       const result = reducer(currentState, action);
       currentState = result;
-      console.log(listeners);
       listeners.forEach(fn => fn());
     },
 
     subscribe: (id, listener) => {
       listeners.set(id, listener);
+      console.log(listeners);
+
       return () => {
         listeners.delete(id);
       };

@@ -18,6 +18,7 @@ export const $: Dollar = (selector, target) => {
     el = target.querySelector(selector);
   }
   if (el === null) {
+    console.log({ el, selector, target });
     throw new Error('$ should return HTMLElement not undefined');
   }
   return el as HTMLElement;

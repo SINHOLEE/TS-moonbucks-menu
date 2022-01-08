@@ -1,9 +1,19 @@
-import Component from '../../core/Component';
+import Component, { BindEvent } from '../../core/Component';
 import Category from './Category';
 import { EVENTS } from '../../constants';
 import { CoffeeKeys } from '../../modules/type';
+import { MenuController } from '../../modules/notUsingMiddlewares/menuController';
 
 export default class Header extends Component {
+  protected props: {
+    menuController: MenuController;
+  };
+  get menuController() {
+    if (this?.props?.menuController === undefined) {
+      throw new Error('menuController should exists');
+    }
+    return this.props.menuController;
+  }
   template() {
     return `
     <a href="/" class="text-black">
@@ -18,7 +28,9 @@ export default class Header extends Component {
     `;
   }
   mount() {
-    new Category({ key: 'category', $parent: this.$parent });
+    this.addChildComponent(
+      new Category({ key: 'category', $parent: this.$parent }),
+    );
   }
   bindEvents() {
     return [
@@ -31,15 +43,13 @@ export default class Header extends Component {
           }
           if ((<Element>target).closest('[data-category-name]')) {
             const clickedTab = (<HTMLElement>target).dataset['categoryName'];
-            console.log({ clickedTab });
             if (clickedTab === undefined) {
               return;
             }
-            this?.props?.currentMenuService.changeTab(clickedTab as CoffeeKeys);
-            // this.props?.
+            this.menuController.changeTab(clickedTab as CoffeeKeys);
           }
         },
-      },
+      } as BindEvent,
     ];
   }
 }

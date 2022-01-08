@@ -1,8 +1,8 @@
 import Component from '../core/Component';
 import { createCurrentMenuRepository } from '../modules/notUsingMiddlewares/Repository';
-import { createCurrentMenuService } from '../modules/notUsingMiddlewares/services';
 import Header from './Header/Header';
 import Main from './Main/Main';
+import { MenuController } from '../modules/notUsingMiddlewares/menuController';
 
 export default class App extends Component {
   template() {
@@ -20,16 +20,17 @@ export default class App extends Component {
     `;
   }
   mount() {
-    new Header({
-      key: 'header',
-      $parent: this.$component,
-      props: {
-        currentMenuService: createCurrentMenuService(
-          createCurrentMenuRepository(this.store, {}),
-        ),
-      },
-    });
-
-    new Main({ key: 'main' });
+    this.addChildComponent(
+      new Header({
+        key: 'header',
+        $parent: this.$component,
+        props: {
+          menuController: MenuController(
+            createCurrentMenuRepository(this.store, {}),
+          ),
+        },
+      }),
+    );
+    this.addChildComponent(new Main({ key: 'main' }));
   }
 }
